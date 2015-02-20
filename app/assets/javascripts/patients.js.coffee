@@ -3,8 +3,6 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 jQuery ->
   api_v1_i18n_datatables_path = $('#patients').data('i18ndatatablespath')
-  alert api_v1_i18n_datatables_path
-  alert $('#patients').data('source')
 
   $('#patients').dataTable
     sPaginationType: "full_numbers"

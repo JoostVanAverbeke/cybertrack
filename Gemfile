@@ -25,10 +25,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 
 # Twitter's Bootstrap, converted to Sass and ready to drop into Rails or Compass
-# gem 'bootstrap-sass', '~> 3.3.3'
-
-gem 'jquery-datatables-rails', '~> 1.11.2'
-
+gem 'bootstrap-sass', '~> 3.3.3'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
