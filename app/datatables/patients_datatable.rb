@@ -6,30 +6,30 @@ class PatientsDatatable
   def initialize(view)
     @view = view
   end
-  
+
   def as_json(options = {})
     {
-      sEcho: params[:sEcho].to_i,
-      iTotalRecords: total_records,
-      iTotalDisplayRecords: 3,
-      aaData: data
+        sEcho: params[:sEcho].to_i,
+        iTotalRecords: total_records,
+        iTotalDisplayRecords: patients.total_entries,
+        aaData: data
     }
   end
 
-private
+  private
 
   def data
     patients.map do |patient|
       [
-        patient.surname,
-        patient.first_name,
-        patient.birth_date
+          patient.surname,
+          patient.first_name,
+          patient.birth_date
       ]
     end
   end
-  
+
   def total_records
-    20
+    Patient.count
   end
 
   def patients
@@ -37,51 +37,32 @@ private
   end
 
   def fetch_patients
-    patient1 = Patient.new
-    patient1.surname = 'Van Averbeke'
-    patient1.first_name = 'Joost'
-    patient1.birth_date = '20/11/1964'
-    patient2 = Patient.new
-    patient2.surname = 'Ampe'
-    patient2.first_name = 'Nadine'
-    patient2.birth_date = '23/06/1936'
-    patient3 = Patient.new
-    patient3.surname = 'Andersen'
-    patient3.first_name = 'Trine'
-    patient3.birth_date = '18/01/1967'
-    [patient1, patient2, patient3]
+    patients = lookup_patients.page(page).per_page(per_page)
+    if params[:sSearch].present?
+      patients = patients.find_by_surname(params[:sSearch])
+    end
+    patients
   end
- #  def fetch_patients
- #    patients = lookup_patients.page(page).per_page(per_page)
- #    if params[:sSearch].present?
- #      patients = patients.find_by_name(params[:sSearch])
- #    end
- #    patients
- # end
- #
- #  def lookup_patients
- #    if @dentist.nil?
- #      patients = Patient.includes(:person).order("#{sort_column} #{sort_direction}")
- #    else
- #      patients = @dentist.patients.includes(:person).order("#{sort_column} #{sort_direction}")
- #    end
- #  end
- #
- #  def page
- #    page_length = params[:iDisplayStart].to_i/per_page + 1
- #  end
- #
- #  def per_page
- #    params[:iDisplayLength].to_i > 0 ? params[:iDisplayLength].to_i : 10
- #  end
- #
- #  def sort_column
- #    columns = %w[people.surname people.first_name people.birth_date]
- #    columns[params[:iSortCol_0].to_i]
- #  end
- #
- #  def sort_direction
- #    params[:sSortDir_0] == "desc" ? "desc" : "asc"
- #  end
-    
+
+  def lookup_patients
+      Patient.includes(:person).order("#{sort_column} #{sort_direction}")
+  end
+
+  def page
+    page_length = params[:iDisplayStart].to_i/per_page + 1
+  end
+
+  def per_page
+    params[:iDisplayLength].to_i > 0 ? params[:iDisplayLength].to_i : 10
+  end
+
+  def sort_column
+    columns = %w[surname first_name birth_date]
+    columns[params[:iSortCol_0].to_i]
+  end
+
+  def sort_direction
+    params[:sSortDir_0] == "desc" ? "desc" : "asc"
+  end
+
 end

@@ -27,9 +27,17 @@ gem 'jbuilder', '~> 1.2'
 # Twitter's Bootstrap, converted to Sass and ready to drop into Rails or Compass
 gem 'bootstrap-sass', '~> 3.3.3'
 
+# jquery datatables for rails
+gem 'jquery-datatables-rails', '~> 3.1.1'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
+end
+
+group :test do
+  gem 'rspec', '~> 3.2.0'
+  gem 'rspec-rails', '~> 3.2.1'
 end
 
 

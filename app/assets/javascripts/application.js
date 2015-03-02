@@ -10,9 +10,7 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//require bootstrap-sprockets
-//= require jquery_ujs
-//= require jquery.dataTables
-//= require turbolinks
+
+// It does not work so nice with the gem 'jquery-datatables-rails', '~> 3.1.1' gem
+// we should create fork of the gem and the latest .js and css files
 //= require_tree .

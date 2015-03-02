@@ -1,16 +1,19 @@
 <h1>Patients#index</h1>
-<%= content_tag "table", id: "patients", class: "display",
-                 data: {
-                        source: patients_url(format: "json"),
-                        i18ndatatablespath: api_v1_i18n_datatable_path(:id => I18n.locale),
-                } do %>
-    <thead>
-    <tr>
-      <th><%= I18n.t('helpers.label.patient.surname') %></th>
-      <th><%= I18n.t('helpers.label.patient.first_name') %></th>
-      <th><%= I18n.t('helpers.label.patient.birth_date') %></th>
-    </tr>
-    </thead>
-    <tbody>
-    </tbody>
-<% end %>
+<!--The class attributes cellspacing: "0", width: "100%" are VERY important -->
+<div class="table-responsive">
+    <%= content_tag "table", id: "patients", class: "table table-striped table-bordered", cellspacing: "0", width: "100%",
+                     data: {
+                            source: patients_url(format: "json"),
+                            i18ndatatablespath: api_v1_i18n_datatable_path(:id => I18n.locale),
+                    } do %>
+        <thead>
+        <tr>
+          <th><%= I18n.t('helpers.label.patient.surname') %></th>
+          <th><%= I18n.t('helpers.label.patient.first_name') %></th>
+          <th><%= I18n.t('helpers.label.patient.birth_date') %></th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    <% end %>
+</div>
