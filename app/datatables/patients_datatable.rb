@@ -11,7 +11,7 @@ class PatientsDatatable
     {
         sEcho: params[:sEcho].to_i,
         iTotalRecords: total_records,
-        iTotalDisplayRecords: patients.total_entries,
+        iTotalDisplayRecords: patients.length,
         aaData: data
     }
   end
@@ -37,15 +37,20 @@ class PatientsDatatable
   end
 
   def fetch_patients
-    patients = lookup_patients.page(page).per_page(per_page)
-    if params[:sSearch].present?
-      patients = patients.find_by_surname(params[:sSearch])
-    end
-    patients
+    patients = lookup_patients
+    # patients = lookup_patients.page(page).per_page(per_page)
+    # if params[:sSearch].present?
+    #   patients = patients.find_by_surname(params[:sSearch])
+    # end
+    # patients
   end
 
   def lookup_patients
-      Patient.includes(:person).order("#{sort_column} #{sort_direction}")
+      Patient.find(query: params[:sSearch],
+                   order: { sort_column: "#{sort_column}", sort_direction: "#{sort_direction}" },
+                   page: page,
+                   limit: per_page)
+          # order("#{sort_column} #{sort_direction}")
   end
 
   def page
